@@ -100,7 +100,7 @@ namespace sdPck
             int FilesCount = stream.ReadInt32();
             ProgressMax = FilesCount;
             stream.Seek(-280, SeekOrigin.End);
-            long FileTableOffset = (long)((ulong)((uint)(stream.ReadUInt32() ^ (ulong)stream.key.KEY_1)));
+            long FileTableOffset = stream.ReadInt64() ^ stream.key.KEY_1;
             stream.Seek(FileTableOffset, SeekOrigin.Begin);
             MessageBox.Show(FileTableOffset.ToString());
             BinaryReader TableStream = new BinaryReader(new MemoryStream(stream.ReadBytes((int)(stream.GetLenght() - FileTableOffset - 288))));
